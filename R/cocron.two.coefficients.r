@@ -5,9 +5,9 @@
 #' For comparing two dependent or independent alpha coefficients (Cronbach, 1951), the methods described in Charter and Feldt (1996) are available, which were originally introduced in Feldt (1969) and Feldt (1980).
 #'
 #' @param alpha A numeric vector containing the two alpha coefficients.
-#' @param n A numeric vector containing the number of subjects who provided the data for the test for which alpha coefficients were determined.
-#' @param indep A logical indicating whether alpha coefficients are based on independent groups of subjects.
-#' @param r A single number specifying the correlation between the scores the alpha coefficients are based on. Only required if the alpha coefficients rely on dependent groups of subjects (\code{indep = TRUE}).
+#' @param n A numeric vector containing the number of participants who provided the data for the test for which alpha coefficients were determined.
+#' @param indep A logical indicating whether alpha coefficients are based on independent groups of participants.
+#' @param r A single number specifying the correlation between the scores the alpha coefficients are based on. Only required if the alpha coefficients are computed for dependent groups of participants (\code{indep = TRUE}).
 #' @param los A number indicating the level of significance (default is \code{.05}).
 #' @param alternative A character string specifying the alternative hypothesis; must be "\code{two.sided}" (default), "\code{greater}", or "\code{less}" (or just the initial letter).
 #'
@@ -51,14 +51,14 @@ cocron.two.coefficients <- function(alpha, n, indep=TRUE, r=NULL, los=.05, alter
   alternative <- check.alternative(alternative)
 
   if(indep) { # feldt1969
-    if(alpha[1] > alpha[2]) { # the larger coefficient has to be alpha[2] which is in the denominator
+    if(alpha[2] > alpha[1]) { # the larger coefficient has to be alpha[1] which is in the denominator
       alpha <- alpha[2:1]
       n <- n[2:1]
     }
 
     distribution <- "F"
-    df <- n[2:1] - 1 # the first df of the F-distribution is dictated by the reliability in the denominator
-    statistic <- (1 - alpha[1]) / (1 - alpha[2])
+    df <- n - 1 # the first df of the F-distribution is dictated by the reliability in the denominator
+    statistic <- (1 - alpha[2]) / (1 - alpha[1])
   } else { # feldt1980
     if(length(r) != 1 || is.na(r) || r < -1 || r > 1) stop("The parameter 'r' must be a single number between -1 and 1")
     n.mean <- mean(n)
@@ -66,7 +66,7 @@ cocron.two.coefficients <- function(alpha, n, indep=TRUE, r=NULL, los=.05, alter
 
     distribution <- "t"
     df <- n.mean - 2
-    statistic <- abs(alpha[1] - alpha[2]) * sqrt(n.mean - 2) / sqrt(4 * (1 - alpha[1]) * (1 - alpha[2]) * (1 - r^2))
+    statistic <- abs(alpha[2] - alpha[1]) * sqrt(n.mean - 2) / sqrt(4 * (1 - alpha[2]) * (1 - alpha[1]) * (1 - r^2))
   }
 
   p.value <- get.p.value(statistic, alternative, distribution, df)

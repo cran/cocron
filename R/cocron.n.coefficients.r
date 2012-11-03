@@ -5,10 +5,10 @@
 #' To compare \eqn{n} dependent or independent alpha coefficients (Cronbach, 1951), the methods by Feldt, Woodruff, and Salih (1987) are implemented.
 #'
 #' @param alpha A numeric vector containing the alpha coefficients.
-#' @param n A numeric vector containing the number of subjects who provided the data for the test for which alpha coefficients were determined.
+#' @param n A numeric vector containing the number of participants who provided the data for the test for which alpha coefficients were determined.
 #' @param items A numeric vector containing the number of items the alpha coefficients are based on.
-#' @param indep A logical indicating whether the alpha coefficients are based on independent groups of subjects.
-#' @param r A matrix that contains in the upper triangle all correlations between the scores the alpha coefficients are based on (see examples). Only required if the alpha coefficients rely on independent groups of subjects (\code{indep = TRUE}).
+#' @param indep A logical indicating whether the alpha coefficients are based on independent groups of participants.
+#' @param r A matrix that contains in the upper triangle all correlations between the scores the alpha coefficients are based on (see examples). Only required if the alpha coefficients are computed for independent groups of participants (\code{indep = TRUE}).
 #' @param los A number indicating the level of significance (default is \code{.05}).
 #'
 #' @return Returns an object of the class "\code{cocron.n.coefficients}" with the following slots:

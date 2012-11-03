@@ -10,7 +10,7 @@
   coefficients.}
 
   \item{n}{A numeric vector containing the number of
-  subjects who provided the data for the test for which
+  participants who provided the data for the test for which
   alpha coefficients were determined.}
 
   \item{items}{A numeric vector containing the number of
@@ -18,13 +18,13 @@
 
   \item{indep}{A logical indicating whether the alpha
   coefficients are based on independent groups of
-  subjects.}
+  participants.}
 
   \item{r}{A matrix that contains in the upper triangle all
   correlations between the scores the alpha coefficients
   are based on (see examples). Only required if the alpha
-  coefficients rely on independent groups of subjects
-  (\code{indep = TRUE}).}
+  coefficients are computed for independent groups of
+  participants (\code{indep = TRUE}).}
 
   \item{los}{A number indicating the level of significance
   (default is \code{.05}).}

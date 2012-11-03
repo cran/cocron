@@ -7,17 +7,17 @@ Depends: methods
 Suggests: testthat
 Description: This package provides functions to statistically compare
         two or more alpha coefficients based on either dependent or
-        independent groups of subjects.
+        independent groups of participants.
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyLoad: yes
 URL: http://r.birkdiedenhofen.de/pckg/cocron/
-Author@R: c(person(given="Birk", family="Diedenhofen",
+Authors@R: c(person(given="Birk", family="Diedenhofen",
         email="mail@birkdiedenhofen.de", role=c("aut", "cre")))
-Version: 0.01-1
-Date: 2012-10-30
+Version: 0.01-3
+Date: 2012-11-03
 Collate: 'cocron.n.coefficients.r' 'cocron-package.R'
         'cocron.two.coefficients.r' 'helper.r'
-Packaged: 2012-10-30 18:32:28 UTC; birk
+Packaged: 2012-11-03 01:54:16 UTC; birk
 Repository: CRAN
-Date/Publication: 2012-10-30 19:56:31
+Date/Publication: 2012-11-03 07:00:57
