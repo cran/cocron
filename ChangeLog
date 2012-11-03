@@ -1,5 +1,16 @@
 ChangeLog for package cocron
 
+changes in version 0.01-3 (2012-11-03)
+fixed:
+  - Fixed some issues in the documentation
+  - Fixed the author specification of the package
+
+changes in version 0.01-2 (2012-11-03)
+fixed:
+  - Fixed the output of the cocron.two.coefficients function for independent
+    alpha coefficients so that the correct alternative hypothesis is displayed
+
 changes in version 0.01-1 (2012-10-30)
 changed:
   - Initial release
+
