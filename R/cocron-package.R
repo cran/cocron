@@ -3,8 +3,8 @@
 #' \tabular{ll}{
 #' Package: \tab cocron\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.01-3\cr
-#' Date: \tab 2012-11-03\cr
+#' Version: \tab 0.01-4\cr
+#' Date: \tab 2012-11-29\cr
 #' Depends: \tab methods\cr
 #' Encoding: \tab UTF-8\cr
 #' License: \tab GPL (>= 3)\cr
