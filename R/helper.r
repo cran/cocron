@@ -28,15 +28,17 @@ check.alternative <- function(alternative) {
 }
 
 print.alternative <- function(object) {
+  alphas <- paste(paste(paste("a", 1:(length(object@alpha) - 1), sep=""), collapse=", "), if(length(object@alpha) > 2) ",", " and a", length(object@alpha), sep="")
+
   switch(class(object),
     cocron.n.coefficients={
-      paste("Alternative hypothesis: ", paste(paste("a", 1:(length(object@alpha) - 1), sep=""), collapse=", "), if(length(object@alpha) > 2) ",", " and a", length(object@alpha), " are not equal", sep="")
+      paste("Null hypothesis: ", alphas, " are equal\n",
+      "Alternative hypothesis: ", alphas, " are not equal", sep="")
     },
     cocron.two.coefficients={
-      paste("Alternative hypothesis: a1",
-        switch(object@alternative, two.sided=" is not equal to ", greater=" is greater than ", less=" is less than "),
-        "a2 (", switch(object@alternative, two.sided="two", "one"), "-sided)", sep=""
-      )
+      paste("Null hypothesis: a1 is equal to a2\n",
+      "Alternative hypothesis: a1", switch(object@alternative, two.sided=" is not equal to ", greater=" is greater than ", less=" is less than "),
+      "a2 (", switch(object@alternative, two.sided="two", "one"), "-sided)", sep="")
     }
   )
 }
@@ -45,8 +47,8 @@ print.test.statistic <- function(object) {
   s <- {
     if(!is.null(object@statistic)) {
       evaluation <- {
-        if(object@p.value <= object@los) "Alternative hypothesis accepted"
-        else "Alternative hypothesis rejected"
+        if(object@p.value <= object@los) "Null hypothesis rejected"
+        else "Null hypothesis retained"
       }
       df <- {
         if(is.null(object@df)) ""
