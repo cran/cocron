@@ -68,11 +68,11 @@ indep=FALSE, r=r)
 \references{
   Cronbach, L. J. (1951). Coefficient alpha and the
   internal structure of tests. \emph{Psychometrika},
-  \emph{16}, 297–334.
+  \emph{16}, 297-334.
 
   Feldt, L. S., Woodruff, D. J., & Salih, F. A. (1987).
   Statistical inference for coefficient alpha.
   \emph{Applied Psychological Measurement}, \emph{11},
-  93–103.
+  93-103.
 }
 

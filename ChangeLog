@@ -1,5 +1,9 @@
 ChangeLog for package cocron
 
+changes in version 0.01-5 (2013-04-04)
+fixed:
+  - Removed all non-ASCII characters from comments and documentation
+
 changes in version 0.01-4 (2012-11-29)
 fixed:
   - Added null hypothesis to the output and corrected the interpretation of
