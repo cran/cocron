@@ -14,10 +14,11 @@ LazyLoad: yes
 URL: http://r.birkdiedenhofen.de/pckg/cocron/
 Authors@R: c(person(given="Birk", family="Diedenhofen",
         email="mail@birkdiedenhofen.de", role=c("aut", "cre")))
-Version: 0.01-4
-Date: 2012-11-29
+Version: 0.01-5
+Date: 2013-04-04
 Collate: 'cocron.n.coefficients.r' 'cocron-package.R'
         'cocron.two.coefficients.r' 'helper.r'
-Packaged: 2012-11-29 21:43:42 UTC; birk
+Packaged: 2013-04-04 16:19:42 UTC; birk
+NeedsCompilation: no
 Repository: CRAN
-Date/Publication: 2012-11-30 07:20:57
+Date/Publication: 2013-04-04 20:26:52

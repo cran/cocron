@@ -3,7 +3,7 @@ library(testthat)
 context("cocron.n.coefficients")
 
 test_that("Calculate examples from the literature", {
-  # Feldt, L. S., Woodruff, D. J., Salih, F. A. (1987). Statistical inference for coefficient alpha. Applied Psychological Measurement, 11, 93–103.
+  # Feldt, L. S., Woodruff, D. J., Salih, F. A. (1987). Statistical inference for coefficient alpha. Applied Psychological Measurement, 11, 93-103.
 
   result <- cocron.n.coefficients(alpha=c(.784,.875,.936), items=c(5,5,5), n=c(51,101,151), indep=TRUE)
   expect_that(result@df, is_identical_to(2))
@@ -113,7 +113,7 @@ test_that("Compare with results from AlphaTest", {
 context("cocron.two.coefficients")
 
 test_that("Calculate examples from the literature", {
-  # Charter, R. A., Feldt, L. S. (1996). Testing the equality of two alpha coefficients. Perceptual and Motor Skills, 82, 763–768.
+  # Charter, R. A., Feldt, L. S. (1996). Testing the equality of two alpha coefficients. Perceptual and Motor Skills, 82, 763-768.
 
   result <- cocron.two.coefficients(alpha=c(.78,.71), n=c(41,151), indep=TRUE, alternative="greater")
   expect_that(result@df, is_identical_to(c(40, 150)))

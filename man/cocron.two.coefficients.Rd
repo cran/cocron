@@ -62,20 +62,20 @@ cocron.two.coefficients(alpha=c(.82,.89), n=27, indep=FALSE, r=.74)
 \references{
   Cronbach, L. J. (1951). Coefficient alpha and the
   internal structure of tests. \emph{Psychometrika},
-  \emph{16}, 297–334.
+  \emph{16}, 297-334.
 
   Charter, R. A., & Feldt, L. S. (1996). Testing the
   equality of two alpha coefficients. \emph{Perceptual and
-  Motor Skills}, \emph{82}, 763–768.
+  Motor Skills}, \emph{82}, 763-768.
 
   Feldt, L. S. (1969). A test of the hypothesis that
   Cronbach's alpha or Kuder-Richardson coefficient twenty
   is the same for two tests. \emph{Psychomelrika},
-  \emph{34}, 363–373.
+  \emph{34}, 363-373.
 
   Feldt, L. S. (1980). A test of the hypothesis that
   Cronbach's alpha reliability coefficient is the same for
   two tests administered to the same sample.
-  \emph{Psychometrika}, \emph{45}, 99–105.
+  \emph{Psychometrika}, \emph{45}, 99-105.
 }
 
