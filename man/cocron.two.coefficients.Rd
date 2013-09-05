@@ -2,7 +2,7 @@
 \alias{cocron.two.coefficients}
 \title{Statistical comparisons of two alpha coefficients}
 \usage{
-  cocron.two.coefficients(alpha, n, indep = TRUE, r = NULL,
+  cocron.two.coefficients(alpha, n, dep = FALSE, r = NULL,
     los = 0.05, alternative = "two.sided")
 }
 \arguments{
@@ -10,17 +10,17 @@
   coefficients.}
 
   \item{n}{A numeric vector containing the number of
-  participants who provided the data for the test for which
+  individuals who provided the data for the test for which
   alpha coefficients were determined.}
 
-  \item{indep}{A logical indicating whether alpha
-  coefficients are based on independent groups of
-  participants.}
+  \item{dep}{A logical indicating whether alpha
+  coefficients are based on dependent groups of individuals
+  (default is \code{FALSE}).}
 
   \item{r}{A single number specifying the correlation
   between the scores the alpha coefficients are based on.
   Only required if the alpha coefficients are computed for
-  dependent groups of participants (\code{indep = TRUE}).}
+  dependent groups of individuals (\code{dep = TRUE}).}
 
   \item{los}{A number indicating the level of significance
   (default is \code{.05}).}
@@ -34,7 +34,7 @@
   Returns an object of the class
   "\code{cocron.two.coefficients}" with the following
   slots: \item{alpha}{Input parameter} \item{n}{Input
-  parameter} \item{indep}{Input parameter} \item{r}{Input
+  parameter} \item{dep}{Input parameter} \item{r}{Input
   parameter} \item{los}{Input parameter}
   \item{alternative}{Input parameter} \item{statistic}{The
   value of the test statistic} \item{distribution}{The
@@ -44,7 +44,8 @@
 }
 \description{
   Performs a test of significance for the difference
-  between two alpha coefficients (Cronbach, 1951).
+  between two alpha coefficients (Cronbach, 1951). The
+  function expects alpha coefficients as input.
 }
 \details{
   For comparing two dependent or independent alpha
@@ -54,10 +55,10 @@
 }
 \examples{
 # independent alpha coefficients
-cocron.two.coefficients(alpha=c(.78,.71), n=c(41,151), indep=TRUE)
+cocron.two.coefficients(alpha=c(.78,.71), n=c(41,151), dep=FALSE)
 
 # dependent alpha coefficients
-cocron.two.coefficients(alpha=c(.82,.89), n=27, indep=FALSE, r=.74)
+cocron.two.coefficients(alpha=c(.82,.89), n=27,dep=TRUE, r=.74)
 }
 \references{
   Cronbach, L. J. (1951). Coefficient alpha and the
@@ -77,5 +78,8 @@ cocron.two.coefficients(alpha=c(.82,.89), n=27, indep=FALSE, r=.74)
   Cronbach's alpha reliability coefficient is the same for
   two tests administered to the same sample.
   \emph{Psychometrika}, \emph{45}, 99-105.
+}
+\seealso{
+  \link{cocron}, \link{cocron.n.coefficients}
 }
 

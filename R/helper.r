@@ -18,6 +18,14 @@ get.p.value <- function(statistic, alternative="two.sided", distribution="norm",
   )
 }
 
+get.conf.int <- function(alpha, n, items, conf.level=.95) {
+  conf.int <- matrix(nrow=length(alpha), ncol=2, dimnames=list(paste("CI", 1:length(alpha), sep=""),c("lower.bound","upper.bound")))
+  for(i in 1:length(alpha)) {
+    conf.int[i,] <- cronbach.alpha.CI(alpha[i], n[i], items[i], conf.level=conf.level)
+  }
+  conf.int
+}
+
 check.alternative <- function(alternative) {
   switch(tolower(substr(alternative,1,1)),
     t="two.sided",
@@ -67,10 +75,12 @@ setClass("cocron.n.coefficients",
     alpha="numeric",
     n="numeric",
     items="numeric",
-    indep="logical",
+    dep="logical",
     r="matrix",
+    conf.int="matrix",
     los="numeric",
     alternative="character",
+    conf.level="numeric",
     df="numeric",
     statistic="numeric",
     distribution="character",
@@ -82,7 +92,7 @@ setClass("cocron.two.coefficients",
   representation(
     alpha="numeric",
     n="numeric",
-    indep="logical",
+    dep="logical",
     r="numeric",
     los="numeric",
     alternative="character",
@@ -93,9 +103,9 @@ setClass("cocron.two.coefficients",
   )
 )
 
-print.independence <- function(object) {
-  if(object@indep) "The coefficients are based on independent groups"
-  else "The coefficients are based on dependent groups"
+print.dependence <- function(object) {
+  if(object@dep) "The coefficients are based on dependent groups"
+  else "The coefficients are based on independent groups"
 }
 
 print.cocron <- function(object) {
@@ -105,12 +115,11 @@ print.cocron <- function(object) {
   )
 
   cat("\n  Compare ", two.or.n, " alpha coefficients\n\n",
-  "Comparison between: ", paste(paste("a", 1:length(object@alpha), " = ", object@alpha, sep=""), collapse=", "), "\n",
-  print.independence(object), "\n",
-  "Group sizes: ", paste(paste("n", 1:length(object@n), " = ", object@n, sep=""), collapse=", "), "\n", sep="")
-
+  "Comparison between: ", paste(paste("a", 1:length(object@alpha), " = ", round(object@alpha,4), sep=""), collapse=", "), "\n",
+  print.dependence(object), "\n", sep="")
+  if(class(object) == "cocron.n.coefficients") cat(object@conf.level * 100, "% confidence intervals: ", paste(paste("CI", 1:length(object@alpha), " = ", apply(object@conf.int, 1, function(x) paste(fround(x,4), collapse=" ")), sep=""), collapse=", "), "\n", sep="")
+  cat("Group sizes: ", paste(paste("n", 1:length(object@n), " = ", object@n, sep=""), collapse=", "), "\n", sep="")
   if(class(object) == "cocron.n.coefficients") cat("Item count: ", paste(paste("i", 1:length(object@items), " = ", object@items, sep=""), collapse=", "), "\n", sep="")
-
   cat(print.alternative(object), "\n",
   "Level of significance: ", object@los, "\n\n", sep="")
   cat(print.test.statistic(object), "\n", sep="")

@@ -1,27 +1,33 @@
 #' Statistical comparisons of n alpha coefficients
 #'
-#' Performs a test of significance for the difference between \eqn{n} alpha coefficients (Cronbach, 1951).
+#' Performs a test of significance for the difference between \eqn{n} alpha coefficients (Cronbach, 1951). The function expects alpha coefficients as input.
 #'
 #' To compare \eqn{n} dependent or independent alpha coefficients (Cronbach, 1951), the methods by Feldt, Woodruff, and Salih (1987) are implemented.
 #'
 #' @param alpha A numeric vector containing the alpha coefficients.
-#' @param n A numeric vector containing the number of participants who provided the data for the test for which alpha coefficients were determined.
+#' @param n A numeric vector containing the number of individuals who provided the data for the test for which alpha coefficients were determined.
 #' @param items A numeric vector containing the number of items the alpha coefficients are based on.
-#' @param indep A logical indicating whether the alpha coefficients are based on independent groups of participants.
-#' @param r A matrix that contains in the upper triangle all correlations between the scores the alpha coefficients are based on (see examples). Only required if the alpha coefficients are computed for independent groups of participants (\code{indep = TRUE}).
+#' @param dep A logical indicating whether the alpha coefficients are based on dependent groups of individuals (default is \code{FALSE}).
+#' @param r A matrix that contains in the upper triangle all correlations between the scores the alpha coefficients are based on (see examples). Only required if the alpha coefficients are computed for dependent groups of individuals (\code{dep = TRUE}).
 #' @param los A number indicating the level of significance (default is \code{.05}).
+#' @param conf.level A number defining the level of confidence for the confidence intervals of the alpha coefficients (default is \eqn{.95}; see \link{cronbach.alpha.CI}). The confidence intervals serve as additional information only, they are not used for the test of significance.
 #'
 #' @return Returns an object of the class "\code{cocron.n.coefficients}" with the following slots:
 #' \item{alpha}{Input parameter}
 #' \item{n}{Input parameter}
 #' \item{items}{Input parameter}
-#' \item{indep}{Input parameter}
+#' \item{dep}{Input parameter}
 #' \item{r}{Input parameter}
 #' \item{los}{Input parameter}
+#' \item{conf.level}{Input parameter}
 #' \item{statistic}{The value of the test statistic}
 #' \item{distribution}{The distribution of the test statistic}
 #' \item{df}{The degrees of freedom of the distribution of the test statistic}
 #' \item{p.value}{The p-value of the test}
+#' \item{conf.int}{The confidence intervals of the alpha coefficients}
+#'
+#' @seealso
+#' \link{cocron}, \link{cocron.two.coefficients}
 #'
 #' @references
 #' Cronbach, L. J. (1951). Coefficient alpha and the internal structure of tests. \emph{Psychometrika}, \emph{16}, 297-334.
@@ -32,7 +38,7 @@
 #'
 #' # independent alpha coefficients
 #' cocron.n.coefficients(alpha=c(.784,.875,.936), items=c(5,5,5), n=c(51,101,151),
-#' indep=TRUE)
+#' dep=FALSE)
 #'
 #' # dependent alpha coefficients
 #' r <- rbind(
@@ -42,19 +48,19 @@
 #'  c(NA,NA,NA,1)
 #' )
 #' cocron.n.coefficients(alpha=c(.857,.875,.800,.833), items=c(50,40,35,25), n=100,
-#' indep=FALSE, r=r)
+#' dep=TRUE, r=r)
 #'
 #' @export
-cocron.n.coefficients <- function(alpha, n, items=NULL, indep=TRUE, r=NULL, los=.05) {
+cocron.n.coefficients <- function(alpha, n, items=NULL, dep=FALSE, r=NULL, los=.05, conf.level=.95) {
   if(length(alpha) < 2 || any(is.na(alpha)) || any(alpha < 0 | alpha > 1) || any(!is.finite(alpha))) stop("The parameter 'alpha' must be a numeric vector containing two or more values between 0 and 1")
 
   if(length(n) == 0 || any(is.na(n)) || any(n <= 0) || any(!is.finite(n))) stop("The parameter 'n' must be a numeric vector containing values > 0")
   if(length(n) != 1 && length(n) != length(alpha)) stop("The parameter 'n' must be either a single number for all coefficients or a numeric vector with values for each coefficient")
   if(length(n) == 1) n <- rep(n, length(alpha))
 
-  if(length(indep) != 1 || is.na(indep) || !is.logical(indep)) stop("The parameter 'indep' must be TRUE or FALSE")
+  if(length(dep) != 1 || is.na(dep) || !is.logical(dep)) stop("The parameter 'dep' must be TRUE or FALSE")
 
-  if(!indep) {
+  if(dep) {
     if(is.matrix(r)) {
       if(nrow(r) != ncol(r)) stop("The parameter 'r' must be a quadratic matrix")
       if(any(r[upper.tri(r)] < -1 | r[upper.tri(r)] > 1)) stop("The parameter 'r' must be a matrix with numbers between -1 and 1 in the upper triangle")
@@ -77,18 +83,12 @@ cocron.n.coefficients <- function(alpha, n, items=NULL, indep=TRUE, r=NULL, los=
   if(length(items) != 1 && length(items) != length(alpha)) stop("The parameter 'items' must be either a single number for all coefficients or a numeric vector with values for each coefficient")
   if(length(items) == 1) items <- rep(items, length(alpha))
   if(length(los) != 1 || is.na(los) || los < 0 || los > 1) stop("The parameter 'los' must be a single number between 0 and 1")
+  if(length(conf.level) != 1 || is.na(conf.level) || conf.level < 0 || conf.level > 1) stop("The parameter 'conf.level' must be a single number between 0 and 1")
 
   m <- length(alpha)
   mean.alpha <- sum((1 - alpha)^(-1/3))/m
 
-  if(indep) {
-    nt <- (items - 1) * n / (items + 1) #nt = n with tilde
-
-    variance <- 2/(9 * (nt - 1) * (1 - alpha)^(2/3))
-    mean.variance <- mean(variance)
-
-    statistic <- sum(((1 - alpha)^(-1/3) - mean.alpha)^2 / mean.variance)
-  } else {
+  if(dep) {
     n.mean <- mean(n)
     if(n.mean != n[1]) warning("The dependent groups have unequal sizes. Continuing with mean group size.")
 
@@ -109,26 +109,36 @@ cocron.n.coefficients <- function(alpha, n, items=NULL, indep=TRUE, r=NULL, los=
     mean.covariance <- mean(covariance[upper.tri(covariance)])
 
     statistic <- sum(((1 - alpha)^(-1/3) - mean.alpha)^2 / (mean.variance - mean.covariance))
+  } else {
+    nt <- (items - 1) * n / (items + 1) #nt = n with tilde
+
+    variance <- 2/(9 * (nt - 1) * (1 - alpha)^(2/3))
+    mean.variance <- mean(variance)
+
+    statistic <- sum(((1 - alpha)^(-1/3) - mean.alpha)^2 / mean.variance)
   }
 
   distribution <- "chisq"
   df <- m - 1
   alternative <- "greater"
   p.value <- get.p.value(statistic, alternative, distribution, df)
+  conf.int <- get.conf.int(alpha, n, items, conf.level)
 
   result <- new("cocron.n.coefficients",
     alpha=alpha,
     n=n,
     items=items,
-    indep=indep,
+    dep=dep,
     los=los,
     alternative=alternative,
+    conf.level=conf.level,
     df=df,
     distribution=distribution,
     statistic=statistic,
-    p.value=p.value
+    p.value=p.value,
+    conf.int=conf.int
   )
-  if(!indep) result@r <- r
+  if(dep) result@r <- r
 
   result
 }
