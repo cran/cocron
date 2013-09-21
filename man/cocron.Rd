@@ -1,0 +1,72 @@
+\name{cocron}
+\alias{cocron}
+\title{Statistical comparisons of n alpha coefficients}
+\usage{
+  cocron(data, dep = FALSE, standardized = FALSE,
+    los = 0.05, conf.level = 0.95)
+}
+\arguments{
+  \item{data}{A list holding two or more
+  data.frames/matrices with rows and columns corresponding
+  to individuals and items, respectively. From each
+  data.frame/matrix an alpha coefficients is determined.}
+
+  \item{dep}{A logical indicating whether the alpha
+  coefficients are based on dependent groups of
+  individuals}
+
+  \item{standardized}{A logic indicating whether a
+  standardized Cronbach alpha should be calculated (default
+  is FALSE).}
+
+  \item{los}{A number indicating the level of significance
+  (default is \code{.05}).}
+
+  \item{conf.level}{A number defining the level of
+  confidence for the confidence intervals of the alpha
+  coefficients (default is \eqn{.95}; see
+  \link{cronbach.alpha.CI}). The confidence intervals serve
+  as additional information only, they are not used for the
+  test of significance.}
+}
+\value{
+  Returns an object of the class
+  "\code{cocron.n.coefficients}" (see
+  \link{cocron.n.coefficients}).
+}
+\description{
+  Performs a test of significance for the difference
+  between \eqn{n} alpha coefficients (Cronbach, 1951). The
+  function expects raw data input from which the alpha
+  coefficients are calculated.
+}
+\details{
+  To compare \eqn{n} dependent or independent alpha
+  coefficients (Cronbach, 1951), the methods by Feldt,
+  Woodruff, and Salih (1987) implemented in
+  \link{cocron.n.coefficients} are used.
+}
+\examples{
+data("knowledge")
+
+# independent alpha coefficients
+cocron(knowledge, dep=FALSE)
+
+# dependent alpha coefficients
+cocron(knowledge, dep=TRUE)
+}
+\references{
+  Cronbach, L. J. (1951). Coefficient alpha and the
+  internal structure of tests. \emph{Psychometrika},
+  \emph{16}, 297-334.
+
+  Feldt, L. S., Woodruff, D. J., & Salih, F. A. (1987).
+  Statistical inference for coefficient alpha.
+  \emph{Applied Psychological Measurement}, \emph{11},
+  93-103.
+}
+\seealso{
+  \link{cocron.n.coefficients},
+  \link{cocron.two.coefficients}
+}
+
