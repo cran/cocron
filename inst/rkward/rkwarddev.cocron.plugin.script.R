@@ -10,9 +10,9 @@ local({
     author=person(given="Birk", family="Diedenhofen", email="mail@birkdiedenhofen.de", role=c("aut","cre")),
     about=list(
       desc="Compare two or more alpha coefficients based on either dependent or independent groups of individuals",
-      version="1.0-0",
-      date=Sys.Date(),
-      url="http://r.birkdiedenhofen.de/pckg/cocron/",
+      version="1.0-1",
+      date="2016-03-11", # Sys.Date(),
+      url="http://comparingcronbachalphas.org",
       license="GPL"
     )
   )
@@ -20,9 +20,7 @@ local({
   dependencies.node <- rk.XML.dependencies(
     dependencies=list(
       rkward.min="0.6.1",
-      rkward.max="",
-      R.min="2.15",
-      R.max=""
+      R.min="2.15"
     )
   )
 
@@ -67,32 +65,44 @@ local({
 
   wizard.raw.data.input.page <- rk.XML.page(
     rk.XML.row(
-      rk.XML.text("Please provide the raw data the Cronbach alphas should be calculated from:<br />")
+      rk.XML.text("Please provide the raw data the Cronbach alphas should be calculated from:<br />", id.name="please_provide_the_raw_data"),
+      id.name="row_instruction_to_provide_raw_data"
     ),
     rk.XML.row(
       rk.XML.col(var.sel),
-      rk.XML.col(raw.data)
+      rk.XML.col(raw.data),
+      id.name="row_input_raw_data"
     )
   )
 
   wizard.manual.data.input.page <- rk.XML.page(
     rk.XML.row(
-      rk.XML.text("Please provide the Cronbach alphas you want to compare and the sample sizes and number of items they are based on:<br />")
+      rk.XML.text("Please provide the Cronbach alphas you want to compare and the sample sizes and number of items they are based on:<br />", id.name="please_provide_the_cronbach_alphas"),
+      id.name="row_instruction_to_input_cronbach_alpha_and_sample_size"
     ),
     rk.XML.row(
-      alpha.count
+      alpha.count,
+      id.name="row_input_cronbach_alpha_count"
     ),
     rk.XML.row(
       rk.XML.col(manual.and.dep.groups.n),
-      rk.XML.col(manual.and.dep.groups.i)
+      rk.XML.col(manual.and.dep.groups.i),
+      id.name="row_input_dep_groups_n_and_i"
     ),
     rk.XML.row(
-      rk.XML.row(manual.and.indep.groups.alpha),
+      rk.XML.row(
+        manual.and.indep.groups.alpha,
+        id.name="row_input_indep_groups_alphas"
+      ),
       rk.XML.row(
         rk.XML.col(manual.and.indep.groups.n),
-        rk.XML.col(manual.and.indep.groups.i)
+        rk.XML.col(manual.and.indep.groups.i),
+        id.name="row_input_indep_groups_n_and_i"
       ),
-      rk.XML.row(manual.and.dep.groups.alpha),
+      rk.XML.row(
+        manual.and.dep.groups.alpha,
+        id.name="row_input_dep_groups_alphas"
+      ),
       rk.XML.stretch()
     )
   )
@@ -218,12 +228,13 @@ local({
     rkh=rkh,
     js=list(
       require="cocron",
-      results.header="\"Comparing Cronbach alphas\"",
+      results.header="Comparing Cronbach alphas",
       calculate=JS.calc,
       printout=JS.print
     ),
     pluginmap=list(name="Comparing Cronbach alphas", hierarchy=list("analysis", "Classical test theory")),
     dependencies=dependencies.node,
+    guess.getter=TRUE,
     load=TRUE,
 #     edit=TRUE,
 #     show=TRUE,

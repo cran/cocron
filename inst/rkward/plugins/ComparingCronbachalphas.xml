@@ -1,9 +1,11 @@
 <!DOCTYPE rkplugin >
 <document>
 	<!-- this code was generated using the rkwarddev package.
-			perhaps don't make changes here, but in the rkwarddev script instead! -->
+		perhaps don't make changes here, but in the rkwarddev script instead! -->
 	<code file="ComparingCronbachalphas.js" />
 	<help file="ComparingCronbachalphas.rkh" />
+	<!-- <dependencies>
+			</dependencies> -->
 	<logic>
 		<convert id="raw_data_input_convert" sources="data_input.string" mode="equals" standard="raw.data" />
 		<convert id="manual_input_convert" sources="data_input.string" mode="equals" standard="manual" />
@@ -13,8 +15,8 @@
 		<convert id="raw_data_and_dep_groups_convert" sources="raw_data_input_convert;dep_groups_convert" mode="and" />
 		<convert id="manual_and_indep_groups_convert" sources="manual_input_convert;indep_groups_convert" mode="and" />
 		<convert id="manual_and_dep_groups_convert" sources="manual_input_convert;dep_groups_convert" mode="and" />
-		<connect governor="raw_data_input_convert" client="pag_rPCPCPCPCD.visible" />
-		<connect governor="manual_input_convert" client="pag_rPCPCPCPCN.visible" />
+		<connect governor="raw_data_input_convert" client="pag_rwPCDDS2S2.visible" />
+		<connect governor="manual_input_convert" client="pag_rPCN227S10.visible" />
 		<connect governor="manual_and_dep_groups_convert" client="pag_txtdPCPC11.visible" />
 		<connect governor="manual_and_indep_groups_convert" client="manual_and_indep_groups_alpha.visible" />
 		<connect governor="manual_and_indep_groups_convert" client="manual_and_indep_groups_n.visible" />
@@ -23,12 +25,12 @@
 		<connect governor="manual_and_dep_groups_convert" client="manual_and_dep_groups_n.visible" />
 		<connect governor="manual_and_dep_groups_convert" client="manual_and_dep_groups_i.visible" />
 		<connect governor="raw_data_input_convert" client="frm_Shldthsc.visible" />
-		<connect governor="alpha_count.int" client="manual_and_dep_groups_r.rows" />
-		<connect governor="alpha_count.int" client="manual_and_dep_groups_r.columns" />
-		<connect governor="alpha_count.int" client="manual_and_indep_groups_alpha.rows" />
-		<connect governor="alpha_count.int" client="manual_and_indep_groups_n.rows" />
-		<connect governor="alpha_count.int" client="manual_and_indep_groups_i.rows" />
-		<connect governor="alpha_count.int" client="manual_and_dep_groups_alpha.rows" />
+		<connect governor="alpha_count.int.state" client="manual_and_dep_groups_r.rows" />
+		<connect governor="alpha_count.int.state" client="manual_and_dep_groups_r.columns" />
+		<connect governor="alpha_count.int.state" client="manual_and_indep_groups_alpha.rows" />
+		<connect governor="alpha_count.int.state" client="manual_and_indep_groups_n.rows" />
+		<connect governor="alpha_count.int.state" client="manual_and_indep_groups_i.rows" />
+		<connect governor="alpha_count.int.state" client="manual_and_dep_groups_alpha.rows" />
 		<connect governor="raw_data_input_convert" client="raw_data_alpha.required" />
 		<connect governor="manual_and_indep_groups_convert" client="manual_and_indep_groups_alpha.required" />
 		<connect governor="manual_and_indep_groups_convert" client="manual_and_indep_groups_n.required" />
@@ -59,13 +61,13 @@
 			</radio>
 			<stretch />
 		</page>
-		<page id="pag_rPCPCPCPCD">
-			<row id="row_txtdtxPCPC">
-				<text id="txt_PlsprvdC">
+		<page id="pag_rwPCDDS2S2">
+			<row id="row_instruction_to_provide_raw_data">
+				<text id="please_provide_the_raw_data">
 					Please provide the raw data the Cronbach alphas should be calculated from: 					<br />
 				</text>
 			</row>
-			<row id="row_clmnDDS2S2">
+			<row id="row_input_raw_data">
 				<column id="clm_vrslctrdvD">
 					<varselector id="vars" label="Data" />
 				</column>
@@ -74,16 +76,16 @@
 				</column>
 			</row>
 		</page>
-		<page id="pag_rPCPCPCPCN">
-			<row id="row_txtdtxPCPC">
-				<text id="txt_PlsprvdC">
+		<page id="pag_rPCN227S10">
+			<row id="row_instruction_to_input_cronbach_alpha_and_sample_size">
+				<text id="please_provide_the_cronbach_alphas">
 					Please provide the Cronbach alphas you want to compare and the sample sizes and number of items they are based on: 					<br />
 				</text>
 			</row>
-			<row id="row_spnbxlN227">
+			<row id="row_input_cronbach_alpha_count">
 				<spinbox label="Number of alpha coefficients to be compared:" id="alpha_count" initial="2" min="2" max="7" type="integer" />
 			</row>
-			<row id="row_cS1000S100">
+			<row id="row_input_dep_groups_n_and_i">
 				<column id="clm_spnbxS1000">
 					<spinbox label="Sample size:" id="manual_and_dep_groups_n" initial="100" min="0" type="integer" />
 				</column>
@@ -91,11 +93,11 @@
 					<spinbox label="Item count:" id="manual_and_dep_groups_i" initial="10" min="0" type="integer" />
 				</column>
 			</row>
-			<row id="row_r011A011A0">
-				<row id="row_mtrxdm011A">
+			<row id="row_r011A01S01">
+				<row id="row_input_indep_groups_alphas">
 					<matrix id="manual_and_indep_groups_alpha" label=" " mode="real" min="0" max="1" allow_user_resize_rows="false" allow_user_resize_columns="false" columns="1" fixed_width="true" horiz_headers="Alpha" />
 				</row>
-				<row id="row_c01S01S01I">
+				<row id="row_input_indep_groups_n_and_i">
 					<column id="clm_mtrxdmn01S">
 						<matrix id="manual_and_indep_groups_n" label=" " mode="integer" min="0" allow_user_resize_rows="false" allow_user_resize_columns="false" columns="1" fixed_width="true" horiz_headers="Sample size" />
 					</column>
@@ -103,7 +105,7 @@
 						<matrix id="manual_and_indep_groups_i" label=" " mode="integer" min="0" allow_user_resize_rows="false" allow_user_resize_columns="false" columns="1" fixed_width="true" horiz_headers="Item count" />
 					</column>
 				</row>
-				<row id="row_mtrxdm011A">
+				<row id="row_input_dep_groups_alphas">
 					<matrix id="manual_and_dep_groups_alpha" label=" " mode="real" min="0" max="1" allow_user_resize_rows="false" allow_user_resize_columns="false" columns="1" fixed_width="true" horiz_headers="Alpha" />
 				</row>
 				<stretch />

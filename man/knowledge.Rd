@@ -11,7 +11,8 @@ Data of 312 testees who completed two tests on general knowledge consisting of 3
 }
 \usage{data(knowledge)}
 \format{
-  A list that contains a matrix for each of the two tests holding 312 observations (rows) on the 30 questions (columns) presented. The ones and zeros stand for correct and incorrect responses, respectively.
+  A list that contains a matrix for each of the two tests holding 312 observations (rows) on the 30 questions (columns) presented. The ones and zeros stand for correct and incorrect responses,
+      respectively.
 }
 \examples{
 data(knowledge)

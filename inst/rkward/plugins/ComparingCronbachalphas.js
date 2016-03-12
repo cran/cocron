@@ -1,5 +1,5 @@
 // this code was generated using the rkwarddev package.
-//perhaps don't make changes here, but in the rkwarddev script instead!
+// perhaps don't make changes here, but in the rkwarddev script instead!
 
 
 
@@ -10,20 +10,20 @@ function preprocess(){
 
 function calculate(){
 	// read in variables from dialog
-	var groups = getValue("groups");
-	var dataInput = getValue("data_input");
-	var rawDataAlpha = getValue("raw_data_alpha");
-	var alphaCount = getValue("alpha_count");
-	var manualAndDepGroupsN = getValue("manual_and_dep_groups_n");
-	var manualAndDepGroupsI = getValue("manual_and_dep_groups_i");
-	var manualAndIndepGroupsAlpha = getValue("manual_and_indep_groups_alpha");
-	var manualAndIndepGroupsN = getValue("manual_and_indep_groups_n");
-	var manualAndIndepGroupsI = getValue("manual_and_indep_groups_i");
-	var manualAndDepGroupsAlpha = getValue("manual_and_dep_groups_alpha");
-	var manualAndDepGroupsR = getValue("manual_and_dep_groups_r");
-	var standardizedAlpha = getValue("standardized_alpha");
-	var los = getValue("los");
-	var confInt = getValue("conf_int");
+	var groups = getString("groups");
+	var dataInput = getString("data_input");
+	var rawDataAlpha = getString("raw_data_alpha");
+	var alphaCount = getString("alpha_count");
+	var manualAndDepGroupsN = getString("manual_and_dep_groups_n");
+	var manualAndDepGroupsI = getString("manual_and_dep_groups_i");
+	var manualAndIndepGroupsAlpha = getList("manual_and_indep_groups_alpha");
+	var manualAndIndepGroupsN = getList("manual_and_indep_groups_n");
+	var manualAndIndepGroupsI = getList("manual_and_indep_groups_i");
+	var manualAndDepGroupsAlpha = getList("manual_and_dep_groups_alpha");
+	var manualAndDepGroupsR = getList("manual_and_dep_groups_r");
+	var los = getString("los");
+	var confInt = getString("conf_int");
+	var standardizedAlpha = getBoolean("standardized_alpha.state");
 
 	// the R code to be evaluated
 	if(dataInput == 'raw.data') {
@@ -53,7 +53,7 @@ function calculate(){
 
 function printout(){
 	// printout the results
-	echo("rk.header(\"Comparing Cronbach alphas\")\n");
+	new Header(i18n("Comparing Cronbach alphas")).print();
 
 	echo("rk.print(result)\n");
 

@@ -1,3 +1,5 @@
+#' @import methods stats
+
 harmonic.mean <- function(x) 1 / mean(1 / x)
 
 fround <- function(x, digits=4) sprintf(paste("%.",digits,"f",sep=""), x)
